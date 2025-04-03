@@ -40,36 +40,6 @@ python MDVRP_Eval.py
 python MDOVRP_Eval.py
 ```
 
-## Configuration
-
-All parameters are configurable directly in the respective `.py` files. Key modifiable parameters include:
-
-• **Training Parameters**: Batch size, learning rate, training epochs
-
-• **Model Architecture**: Hidden dimensions, attention heads
-
-• **Problem Settings**: Number of depots, customers, and vehicles
-
-Example configuration snippet from `MDVRP_Train.py`:
-
-```python
-# Hyperparameters
-self.batch_size = 512
-self.lr = 1e-4
-self.n_epochs = 100
-self.hidden_dim = 128
-```
-
-## Repository Structure
-
-```
-├── MDVRP_Train.py       # Training script for MDVRP
-├── MDVRP_Eval.py        # Evaluation script for MDVRP
-├── MDOVRP_Train.py      # Training script for MDOVRP
-├── MDOVRP_Eval.py       # Evaluation script for MDOVRP
-└── README.md
-```
-
 ## License
 
 This project is released for academic/research use. For commercial use, please contact the authors.
