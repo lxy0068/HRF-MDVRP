@@ -529,40 +529,6 @@ class EncoderLayer(nn.Module):
         return out2
 
 
-class EncoderLayer(nn.Module):
-    def __init__(self, **model_params):
-        super().__init__()
-        self.model_params = model_params
-        self.embedding_dim = self.model_params['embedding_dim']
-        self.head_num = self.model_params['head_num']
-        self.qkv_dim = self.model_params['qkv_dim']
-
-        self.Wq = nn.Linear(self.embedding_dim, self.head_num * self.qkv_dim, bias=False)
-        self.Wk = nn.Linear(self.embedding_dim, self.head_num * self.qkv_dim, bias=False)
-        self.Wv = nn.Linear(self.embedding_dim, self.head_num * self.qkv_dim, bias=False)
-        self.multi_head_combine = nn.Linear(self.head_num * self.qkv_dim, self.embedding_dim)
-
-        self.norm1 = Norm(**model_params)
-        self.ff = FF(**model_params)
-        self.norm2 = Norm(**model_params)
-
-    def forward(self, out):
-        # shape: (batch_size, node_size, embedding_dim)
-        q = multi_head_qkv(self.Wq(out), head_num=self.head_num)
-        k = multi_head_qkv(self.Wk(out), head_num=self.head_num)
-        v = multi_head_qkv(self.Wv(out), head_num=self.head_num)
-        # shape: (batch_size, head_num, node_size, qkv_dim)
-        out_concat = multi_head_attention(q, k, v)
-        # shape: (batch_size, node_size, head_num * qkv_dim)
-        multi_head_out = self.multi_head_combine(out_concat)
-        # shape: (batch_size, node_size, embedding_dim)
-        out1 = self.norm1(out, multi_head_out)
-        out2 = self.ff(out1)
-        out3 = self.norm2(out1, out2)
-        return out3
-        # shape :(batch_size, node_size, embedding_dim)
-
-
 class Decoder(nn.Module):
     def __init__(self, **model_params):
         super().__init__()
