@@ -578,8 +578,8 @@ class Decoder(nn.Module):
         self.v_depot = multi_head_qkv(self.Wv_depot(encoded_depots), head_num=self.head_num)
         # shape: (batch_size, head_num, depot_size, qkv_dim)
 
-        self.k_customer = multi_head_qkv(self.Wk_depot(encoded_customers), head_num=self.head_num)
-        self.v_customer = multi_head_qkv(self.Wv_depot(encoded_customers), head_num=self.head_num)
+        self.k_customer = multi_head_qkv(self.Wk_customer(encoded_customers), head_num=self.head_num)
+        self.v_customer = multi_head_qkv(self.Wv_customer(encoded_customers), head_num=self.head_num)
         # shape: (batch_size, head_num, depot_size, qkv_dim)
 
     def forward(self, encoded_nodes, state, mask):
